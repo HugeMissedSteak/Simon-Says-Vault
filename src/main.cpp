@@ -37,7 +37,7 @@
 #define CHOICE_RED    '0'
 #define CHOICE_GREEN  '9'
 #define CHOICE_BLUE   '7'
-#define CHOICE_YELLOW '5'
+#define CHOICE_WHITE  '5'
 
 #define LED_RED     9
 #define LED_GREEN   5
@@ -50,7 +50,7 @@
 #define BUZZER  6
 
 // Define game parameters
-#define ROUNDS_TO_WIN      10 //Number of rounds to succesfully remember before you win. 13 is do-able.
+#define ROUNDS_TO_WIN      7 //Number of rounds to succesfully remember before you win.
 #define ENTRY_TIME_LIMIT   3000 //Amount of time to press a button before game times out. 3000ms = 3 sec
 
 #define MODE_MEMORY  0
@@ -112,10 +112,10 @@ void loop()
   Serial.println("Game mode");
 
   // Indicate the start of game play
-  setColor(255,255,255); // White
-  delay(1000);
+  //setColor(255,255,255); // White
+  //delay(1000);
   setColor(0,0,0); // Turn off LED
-  delay(250);
+  delay(200);
 
   // Play memory game and handle result
   if (play_memory() == true) 
@@ -181,7 +181,7 @@ void add_to_moves(void)
   if(newButton == 0) newButton = CHOICE_RED;
   else if(newButton == 1) newButton = CHOICE_GREEN;
   else if(newButton == 2) newButton = CHOICE_BLUE;
-  else if(newButton == 3) newButton = CHOICE_YELLOW;
+  else if(newButton == 3) newButton = CHOICE_WHITE;
 
   gameBoard[gameRound++] = newButton; // Add this new button to the game array
 }
@@ -243,8 +243,8 @@ void toner(char which, int buzz_length_ms)
     setColor(0,0,255);
     buzz_sound(buzz_length_ms, 851); 
     break;
-  case CHOICE_YELLOW:
-    setColor(255,255,50);
+  case CHOICE_WHITE:
+    setColor(255,255,255);
     buzz_sound(buzz_length_ms, 638); 
     break;
   }
@@ -340,7 +340,7 @@ void attractMode(void)
     if (keypad.getKey() != CHOICE_NONE) return;
     if (!digitalRead(UNLOCK_BUTTON)) manualUnlock();
 
-    //LowPower.idle(SLEEP_250MS, ADC_OFF, TIMER2_OFF, TIMER1_OFF, TIMER0_OFF, SPI_OFF, USART0_OFF, TWI_OFF);
+    LowPower.idle(SLEEP_250MS, ADC_OFF, TIMER2_OFF, TIMER1_OFF, TIMER0_OFF, SPI_OFF, USART0_OFF, TWI_OFF);
   }
 }
 
